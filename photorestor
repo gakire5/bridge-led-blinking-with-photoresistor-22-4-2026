@@ -1,0 +1,37 @@
+
+const int ldrPin = A0;     // Photoresistor pin
+const int led1 = 2;        // LED 1
+const int led2 = 3;        // LED 2
+const int buzzer = 6;      // Buzzer
+
+int threshold = 500;       // Light level threshold (adjust if needed)
+
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  Serial.begin(9600); // Optional for debugging
+}
+
+void loop() {
+  int ldrValue = analogRead(ldrPin);
+  Serial.println(ldrValue); // See values in Serial Monitor
+
+  if (ldrValue < threshold) {
+    // DARK → Blink LEDs and beep buzzer
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, LOW);
+    digitalWrite(buzzer, HIGH);
+    delay(300);
+
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, HIGH);
+    digitalWrite(buzzer, LOW);
+    delay(300);
+  } 
+  else {
+    // LIGHT → Turn everything OFF
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    digitalWrite(buzzer, LOW);
+  }
